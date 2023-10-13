@@ -1,0 +1,7 @@
+# tasks/change_docker_socket_permissions.yml
+---
+- name: Change mode of /var/run/docker.sock
+  become: true
+  file:
+    path: /var/run/docker.sock
+    mode: '0666'

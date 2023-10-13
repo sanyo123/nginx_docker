@@ -1,0 +1,32 @@
+- name: Install Python 3 and pip
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - python3
+    - python3-pip
+    - python3-docker
+    - docker
+
+- name: Prompt for Docker Username
+  pause:
+    prompt: "Enter your Docker username"
+  register: docker_username
+
+
+- name: Prompt for Docker Password
+  pause:
+    prompt: "Enter your Docker password"
+  register: docker_password
+
+- name: Export Docker Username to Environment Variable
+  ansible.builtin.set_fact:
+    DOCKER_USERNAME: "{{ docker_username }}"
+    DOCKER_PASSWORD: "{{ docker_password}}"
+  when: docker_username.user_input is defined
+
+- name: Docker Login
+  docker_login:
+    username: "{{ lookup('env', 'DOCKER_USERNAME') }}"
+    password: "{{ lookup('env', 'DOCKER_PASSWORD') }}"
+  when: lookup('env', 'DOCKER_USERNAME') is defined and lookup('env', 'DOCKER_PASSWORD') is defined

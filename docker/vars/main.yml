@@ -1,0 +1,5 @@
+---
+# Empty file
+# roles/docker_login/vars/main.yml
+docker_username: ""
+docker_password: ""
