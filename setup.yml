@@ -1,0 +1,9 @@
+---
+- name: Spin up Nginx Container
+  hosts: ec2
+  become: true
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  roles:
+    - docker
+    - nginx_docker
